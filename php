@@ -7,3 +7,9 @@ $response = @file_get_contents($url);
 if ($response === false) {
     die("Error: Unable to fetch data from the API.");
 }
+
+// Decode JSON Response
+$data = json_decode($response, true);
+if (!isset($data['records'])) {
+    die("Error: Invalid data format.");
+}
