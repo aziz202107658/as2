@@ -13,3 +13,41 @@ $data = json_decode($response, true);
 if (!isset($data['records'])) {
     die("Error: Invalid data format.");
 }
+
+// Extract Records
+$records = $data['records'];
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UOB Student Nationalities</title>
+    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
+</head>
+<body>
+    <main class="container">
+        <h1>University of Bahrain: Student Nationalities</h1>
+        <?php if (count($records) > 0): ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nationality</th>
+                        <th>Enrollment Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($records as $record): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($record['record']['fields']['nationality'] ?? 'Unknown') ?></td>
+                            <td><?= htmlspecialchars($record['record']['fields']['count'] ?? '0') ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <p>No data available to display.</p>
+        <?php endif; ?>
+    </main>
+</body>
+</html>
